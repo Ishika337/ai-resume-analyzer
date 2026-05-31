@@ -1,76 +1,28 @@
-import React, { useState, useEffect } from "react";
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-
-import Navbar from "./components/Navbar";
-
-import Home from "./pages/home";
-import Dashboard from "./pages/dashboard";
-import About from "./pages/about";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
-
-import ProtectedRoute from "./components/ProtectedRoute";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Dashboard from './pages/dashboard';
+import Interview from './pages/Interview';
+import InterviewReport from './pages/InterviewReport';
 
 function App() {
-
-  const [analysisData, setAnalysisData] = useState(null);
-
-  useEffect(() => {
-
-    const savedData = localStorage.getItem("analysisData");
-
-    if (savedData) {
-      setAnalysisData(JSON.parse(savedData));
-    }
-
-  }, []);
-
   return (
-    <BrowserRouter>
-
-      <Navbar />
-
-      <Routes>
-
-        <Route
-          path="/"
-          element={
-            <Home setAnalysisData={setAnalysisData} />
-          }
-        />
-
-        <Route
-          path="/about"
-          element={<About />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard data={analysisData} />
-            </ProtectedRoute>
-          }
-        />
-
-      </Routes>
-
-    </BrowserRouter>
+    <Router>
+      <div className="min-h-screen bg-gray-900 text-gray-100 selection:bg-indigo-500/30 selection:text-indigo-200">
+        <Routes>
+          {/* Main profile controller entry track */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Interactive live speech processing nodes */}
+          <Route path="/interview" element={<Interview />} />
+          
+          {/* Detailed structured analytical reports sheet */}
+          <Route path="/interview-report" element={<InterviewReport />} />
+          
+          {/* Fallback route redirection rules */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
